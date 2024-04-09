@@ -39,7 +39,7 @@ def bubble_sort(arr, check=False):
     return arr
 
 def merge_sort(arr, check=False):
-    
+    if check: print("---merge sort---")
     
     half = len(arr) // 2
     arr1, arr2 = arr[:half], arr[half:]

@@ -6,7 +6,7 @@ def swap(arr, i, j, check=False):
     if check:
         print(f"swap {i}, {j} -> {arr}")
 
-def selection(arr, check=False):
+def selection_sort(arr, check=False):
     if check: print("---selcection sort---")
     
     for i in range(len(arr)):
@@ -18,7 +18,7 @@ def selection(arr, check=False):
         
     return arr
 
-def insertion(arr, check=False):
+def insertion_sort(arr, check=False):
     if check: print("---insetion sort---")
 
     for i in range(1, len(arr)):
@@ -28,7 +28,7 @@ def insertion(arr, check=False):
         
     return arr
 
-def bubble(arr, check=False):
+def bubble_sort(arr, check=False):
     if check: print("---bubble sort---")
     
     for i in range(len(arr)):
@@ -38,9 +38,15 @@ def bubble(arr, check=False):
 
     return arr
 
-def merge(arr, check=False):
-    ...
+def merge_sort(arr, check=False):
+    
+    
+    half = len(arr) // 2
+    arr1, arr2 = arr[:half], arr[half:]
+    merge_sort(arr1)
+    
     
 arr = [5, 2, 4, 3, 1]
-sorted_arr = bubble(arr, check=True)
+sorted_arr = bubble_sort(arr, check=True)
+print(swap.__name__)
 print(sorted_arr)

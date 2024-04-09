@@ -1,7 +1,7 @@
 #선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅, 인트로
 
 
-def swap(arr, i, j, check):
+def swap(arr, i, j, check=False):
     arr[i], arr[j] = arr[j], arr[i]
     if check:
         print(f"swap {i}, {j} -> {arr}")
@@ -31,14 +31,16 @@ def insertion(arr, check=False):
 def bubble(arr, check=False):
     if check: print("---bubble sort---")
     
-    for _ in range(len(arr)):
-        for i in range(len(arr) - 1):
-            if arr[i] > arr[i + 1]:
-                swap(arr, i, i + 1, check)
+    for i in range(len(arr)):
+        for j in range(len(arr) - i-1):
+            if arr[j] > arr[j + 1]:
+                swap(arr, j, j + 1, check)
 
     return arr
 
-            
+def merge(arr, check=False):
+    ...
+    
 arr = [5, 2, 4, 3, 1]
 sorted_arr = bubble(arr, check=True)
 print(sorted_arr)

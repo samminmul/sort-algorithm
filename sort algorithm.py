@@ -1,5 +1,8 @@
-#선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅, 인트로
+from random import randrange
+from time import time
 
+
+#정렬: 선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅, 인트로
 
 def swap(arr, i, j, check=False):
     arr[i], arr[j] = arr[j], arr[i]
@@ -41,12 +44,37 @@ def bubble_sort(arr, check=False):
 def merge_sort(arr, check=False):
     if check: print("---merge sort---")
     
+    if len(arr) <= 1:
+        return arr
+
     half = len(arr) // 2
     arr1, arr2 = arr[:half], arr[half:]
-    merge_sort(arr1)
+    arr1 = merge_sort(arr1)
+    arr2 = merge_sort(arr2)
     
+    merged_arr = []
+    i1, i2 = 0, 0
+    while i1 < len(arr1) and i2 < len(arr2):
+        if arr1[i1] < arr2[i2]:
+            merged_arr.append(arr1[i1])
+            i1 += 1
+        else:
+            merged_arr.append(arr2[i2])
+            i2 += 1
+
+    merged_arr += arr1[i1:]
+    merged_arr += arr2[i2:]
     
-arr = [5, 2, 4, 3, 1]
-sorted_arr = bubble_sort(arr, check=True)
-print(swap.__name__)
+    return merged_arr    
+    
+def quick_sork(arr, check=False):
+    if check: print("---quick sort---")
+
+    pivot = arr[0]
+
+    
+arr = [1, 3, 2, 4, 5]
+
+sorted_arr = merge_sort(arr)
+print(arr)
 print(sorted_arr)

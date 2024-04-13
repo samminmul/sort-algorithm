@@ -67,7 +67,7 @@ def merge_sort(arr, check=False):
     
     return merged_arr    
     
-def quick_sork(arr, check=False):
+def quick_sort(arr, check=False):
     if check: print("---quick sort---")
 
     pivot = arr[0]

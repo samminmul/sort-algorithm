@@ -41,17 +41,7 @@ def bubble_sort(arr, check=False):
 
     return arr
 
-def merge_sort(arr, check=False):
-    if check: print("---merge sort---")
-    
-    if len(arr) <= 1:
-        return arr
-
-    half = len(arr) // 2
-    arr1, arr2 = arr[:half], arr[half:]
-    arr1 = merge_sort(arr1)
-    arr2 = merge_sort(arr2)
-    
+def merge(arr1, arr2):
     merged_arr = []
     i1, i2 = 0, 0
     while i1 < len(arr1) and i2 < len(arr2):
@@ -64,17 +54,54 @@ def merge_sort(arr, check=False):
 
     merged_arr += arr1[i1:]
     merged_arr += arr2[i2:]
-    
-    return merged_arr    
-    
-def quick_sort(arr, check=False):
-    if check: print("---quick sort---")
 
-    pivot = arr[0]
+    return merged_arr
+
+def merge_sort(arr): #수정필요
+    if len(arr) <= 1:
+        return arr
+
+    half = len(arr) // 2
+    arr1, arr2 = arr[:half], arr[half:]
+    arr1 = merge_sort(arr1)
+    arr2 = merge_sort(arr2)
+    
+    merged_arr = merge(arr1, arr2)
+    
+    return merged_arr
+
+
+def partition(arr, start, end):
+    pivot, piv_idx = arr[low], low
+    low, high = start + 1, end
+    while True:
+        
+        while True:
+            low += 1
+            if arr[low] > pivot or low > end:
+                break
+        while arr[high] >= pivot:
+            high -= 1
+            print(arr[ll:hh + 1], low, high, pivot)
+        swap(arr, low, high, check=True)
+
+    swap(arr, piv_idx, low, check=True)
+    piv_idx = low
+
+    return piv_idx
 
     
-arr = [1, 3, 2, 4, 5]
 
-sorted_arr = merge_sort(arr)
+def quick_sort(arr, start, end):
+    if start == end:
+        return
+    
+    piv_idx = partition(arr, start, end)
+    quick_sort(arr, start, piv_idx - 1)
+    quick_sort(arr, piv_idx + 1, end)
+    
+    
+arr = [5, 2, 3, 4, 6, 4, 23, 12, 3, 54,3,1]
+
+sorted_arr = quick_sort(arr, 0, len(arr)-1)
 print(arr)
-print(sorted_arr)

@@ -9,91 +9,87 @@ def swap(arr, i, j, check=False):
     if check:
         print(f"swap {i}, {j} -> {arr}")
 
-def selection_sort(arr, check=False):
-    if check: print("---selcection sort---")
+
+def selection_sort(arr):
     
     for i in range(len(arr)):
         min_idx = i
         for j in range(i + 1, len(arr)):
             if arr[min_idx] > arr[j]:
                 min_idx = j
-        swap(arr, i, min_idx, check)
-        
-    return arr
+        swap(arr, i, min_idx)
 
-def insertion_sort(arr, check=False):
-    if check: print("---insetion sort---")
+
+def insertion_sort(arr):
 
     for i in range(1, len(arr)):
         while arr[i - 1] > arr[i] and i > 1:
-            swap(arr, i, i - 1, check)
+            swap(arr, i, i - 1)
             i -= 1
-        
-    return arr
 
-def bubble_sort(arr, check=False):
-    if check: print("---bubble sort---")
-    
+
+def bubble_sort(arr):
+
     for i in range(len(arr)):
-        for j in range(len(arr) - i-1):
+        for j in range(len(arr) - i - 1):
             if arr[j] > arr[j + 1]:
-                swap(arr, j, j + 1, check)
+                swap(arr, j, j + 1)
 
-    return arr
 
-def merge(arr1, arr2):
-    merged_arr = []
-    i1, i2 = 0, 0
-    while i1 < len(arr1) and i2 < len(arr2):
-        if arr1[i1] < arr2[i2]:
-            merged_arr.append(arr1[i1])
+def merge(arr, start, half, end):
+    i1, i2 = start, half + 1
+    tmp = []
+    while i1 <= half and i2 <= end:
+        if arr[i1] < arr[i2]:
+            tmp.append(arr[i1])
             i1 += 1
         else:
-            merged_arr.append(arr2[i2])
+            tmp.append(arr[i2])
             i2 += 1
 
-    merged_arr += arr1[i1:]
-    merged_arr += arr2[i2:]
+    for i in range(i1, half + 1):
+        tmp.append(arr[i])
+    for i in range(i2, end + 1):
+        tmp.append(arr[i])
 
-    return merged_arr
+    for i in range(len(tmp)):
+        arr[start + i] = tmp[i]
 
-def merge_sort(arr): #수정필요
-    if len(arr) <= 1:
-        return arr
-
-    half = len(arr) // 2
-    arr1, arr2 = arr[:half], arr[half:]
-    arr1 = merge_sort(arr1)
-    arr2 = merge_sort(arr2)
+def merge_sort(arr, start, end):
+    if start >= end: 
+        return
     
-    merged_arr = merge(arr1, arr2)
+    half = start + (end - start)//2
+    merge_sort(arr, start, half)
+    merge_sort(arr, half + 1, end)
+    merge(arr, start, half, end)
     
-    return merged_arr
-
 
 def partition(arr, start, end):
-    pivot, piv_idx = arr[low], low
-    low, high = start + 1, end
+    pivot, piv_idx = arr[start], start
+    low, high = start, end + 1
     while True:
-        
+
         while True:
             low += 1
-            if arr[low] > pivot or low > end:
+            if low > end or arr[low] > pivot:
                 break
-        while arr[high] >= pivot:
+        while True:
             high -= 1
-            print(arr[ll:hh + 1], low, high, pivot)
-        swap(arr, low, high, check=True)
+            if high <= start or arr[high] < pivot:
+                break
+        
+        if low >= high:
+            break
+        swap(arr, low, high)
 
-    swap(arr, piv_idx, low, check=True)
-    piv_idx = low
+    swap(arr, piv_idx, low - 1)
+    piv_idx = low - 1
 
     return piv_idx
 
-    
-
 def quick_sort(arr, start, end):
-    if start == end:
+    if start >= end:
         return
     
     piv_idx = partition(arr, start, end)
@@ -101,7 +97,7 @@ def quick_sort(arr, start, end):
     quick_sort(arr, piv_idx + 1, end)
     
     
-arr = [5, 2, 3, 4, 6, 4, 23, 12, 3, 54,3,1]
+arr = [randrange(0, 100) for _ in range(20)]
 
-sorted_arr = quick_sort(arr, 0, len(arr)-1)
+merge_sort(arr, 0, len(arr) - 1)
 print(arr)

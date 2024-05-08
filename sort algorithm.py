@@ -11,7 +11,6 @@ def swap(arr, i, j, check=False):
 
 
 def selection_sort(arr):
-    
     for i in range(len(arr)):
         min_idx = i
         for j in range(i + 1, len(arr)):
@@ -21,7 +20,6 @@ def selection_sort(arr):
 
 
 def insertion_sort(arr):
-
     for i in range(1, len(arr)):
         while arr[i - 1] > arr[i] and i > 1:
             swap(arr, i, i - 1)
@@ -29,7 +27,6 @@ def insertion_sort(arr):
 
 
 def bubble_sort(arr):
-
     for i in range(len(arr)):
         for j in range(len(arr) - i - 1):
             if arr[j] > arr[j + 1]:
@@ -96,8 +93,60 @@ def quick_sort(arr, start, end):
     quick_sort(arr, start, piv_idx - 1)
     quick_sort(arr, piv_idx + 1, end)
     
-    
-arr = [randrange(0, 100) for _ in range(20)]
 
-merge_sort(arr, 0, len(arr) - 1)
+class Heap:
+    def __init__(self, arr) -> None:
+        self.heap = [0]
+        for i in arr:
+            self.insert(i)
+
+    def getsize(self):
+        return len(self.heap) - 1
+    
+    def heapify(self, i):
+        while 1 < i <= self.getsize() and self.heap[i] < self.heap[i//2]:
+            swap(self.heap, i, i//2)
+            i //= 2
+        while True:
+            if i*2 > self.getsize():
+                return
+            elif i*2 == self.getsize():
+                if self.heap[i] > self.heap[i*2]:
+                    swap(self.heap, i, i*2)
+                    i *= 2
+                else:
+                    return
+            else:
+                if self.heap[i*2] > self.heap[i*2 + 1] and self.heap[i] > self.heap[i*2 + 1]:
+                    swap(self.heap, i, i*2 + 1)
+                    i = i*2 + 1
+                elif self.heap[i*2] <= self.heap[i*2 + 1] and self.heap[i] > self.heap[i*2]:
+                    swap(self.heap, i, i*2)
+                    i *= 2
+                else:
+                    return
+
+    def insert(self, value: int):
+        self.heap.append(value)
+        self.heapify(self.getsize())
+        
+    def pophead(self):
+        swap(self.heap, 1, self.getsize())
+        head = self.heap.pop()
+        self.heapify(1)
+
+        return head
+
+def heap_sort(arr):
+    heap = Heap(arr)
+    rslt = []
+    for _ in range(heap.getsize()):
+        rslt.append(heap.pophead())
+
+    return rslt
+
+
+arr = [randrange(100) for _ in range(50)]
+
+arr = heap_sort(arr)
 print(arr)

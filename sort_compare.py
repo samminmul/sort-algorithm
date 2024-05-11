@@ -2,7 +2,7 @@ from random import randrange
 from time import time
 import matplotlib.pyplot as plt
 import numpy as np
-from SortAlgorithms import sort_collection
+from sort_algorithms import sort_collection
 
 
 sorts = sort_collection[:-1] #counting_sort2는 일단 제외

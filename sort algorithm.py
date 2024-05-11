@@ -1,7 +1,3 @@
-from random import randrange
-from time import time
-
-
 #정렬: 선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅
 
 def swap(arr, i, j, check=False):
@@ -173,9 +169,3 @@ def counting_sort2(arr): #누적합 이용
         count[num] -= 1
 
     return rslt
-
-
-arr = [randrange(100) for _ in range(50)]
-
-arr = counting_sort2(arr)
-print(arr)

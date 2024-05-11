@@ -2,7 +2,7 @@ from random import randrange
 from time import time
 
 
-#정렬: 선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅, 인트로
+#정렬: 선택, 삽입, 버블, 병합, 퀵, 힙, 카운팅
 
 def swap(arr, i, j, check=False):
     arr[i], arr[j] = arr[j], arr[i]
@@ -146,7 +146,36 @@ def heap_sort(arr):
     return rslt
 
 
+def counting_sort1(arr):
+    count = [0] * (max(arr) + 1)
+    for i in arr:
+        count[i] += 1
+
+    rslt = []
+    for i in range(len(count)):
+        for _ in range(count[i]):
+            rslt.append(i)
+
+    return rslt
+
+def counting_sort2(arr): #누적합 이용
+    count = [0] * (max(arr) + 1)
+    for i in arr:
+        count[i] += 1
+
+    for i in range(1, len(count)):
+        count[i] += count[i-1]
+
+    rslt = [0] * (len(arr))
+    for num in arr:
+        idx = count[num]
+        rslt[idx - 1] = num
+        count[num] -= 1
+
+    return rslt
+
+
 arr = [randrange(100) for _ in range(50)]
 
-arr = heap_sort(arr)
+arr = counting_sort2(arr)
 print(arr)

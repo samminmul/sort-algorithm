@@ -9,8 +9,8 @@ sorts = sort_collection[:-1] #counting_sort2는 일단 제외
 sort_times = [[0]*10 for _ in range(len(sorts))]
 
 lengths_of_arrs_to_sort = [i*1000 for i in range(1, len(sort_times[0]) + 1)]
-REPEAT = 5
-for _ in range(REPEAT):
+REPEATS = 5
+for _ in range(REPEATS):
     for i in range(len(lengths_of_arrs_to_sort)):
         arr = [randrange(100) for _ in range(lengths_of_arrs_to_sort[i])]
 
@@ -21,7 +21,7 @@ for _ in range(REPEAT):
             sort_time = time() - timestamp
 
             print(lengths_of_arrs_to_sort[i], sort_time, sorts[j].__name__, sep=" ; ")
-            sort_times[j][i] += sort_time/REPEAT
+            sort_times[j][i] += sort_time/REPEATS
 
 
 for i in range(len(sorts)):

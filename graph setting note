@@ -1,0 +1,13 @@
+*
+1000, 2501, 500
+generate_almost_sorted_list
+거의 정렬된 리스트에 대한 정렬 속도
+
+*
+1000, 10001, 1000
+generate_random_list_allowing_overlap{min_value=0, max_value=i}
+중복값을 허용한 랜덤 리스트에 대한 정렬 속도
+
+n**2 3개 제외
+1000, 60001, 5000
+중복값을 허용한 랜덤 리스트에 대한 정렬 속도

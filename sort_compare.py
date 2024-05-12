@@ -7,6 +7,8 @@ from sort_algorithms import bubble_sort, insertion_sort, selection_sort, merge_s
                             heap_sort, quick_sort, counting_sort, counting_sort2
 RECURSION_LIMIT = 100000000
 sys.setrecursionlimit(RECURSION_LIMIT)
+plt.rcParams['font.family'] ='Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
 
 
 class ListGenerator:
@@ -16,8 +18,8 @@ class ListGenerator:
     def generate_random_list(self, length: int) -> list[int]:
         return shuffle([i for i in range(length)])
 
-    def generate_random_list_allowing_overlap(self, length: int, max_value: int) -> list[int]:
-        return [randrange(max_value) for _ in range(length)]
+    def generate_random_list_allowing_overlap(self, length: int, min_value: int, max_value: int) -> list[int]:
+        return [randrange(min_value, max_value + 1) for _ in range(length)]
 
     def generate_sorted_list(self, length: int) -> list[int]:
         return [i for i in range(length)]
@@ -71,8 +73,8 @@ for repeat in range(1, REPEATS + 1):
 for i in range(len(sort_algorithms)):
     plt.plot(arr_lengths, spent_times[i], label=sort_algorithms[i].__name__)
 
-plt.xlabel("array length")
-plt.ylabel("spent time(sec)")
-plt.title("") #이곳에 그래프 제목 입력
+plt.xlabel("리스트의 길이")
+plt.ylabel("정렬 시간(초)")
+plt.title("거의 정렬된 리스트에 대한 정렬 속도") #이곳에 그래프 제목 입력
 plt.legend()
 plt.show()

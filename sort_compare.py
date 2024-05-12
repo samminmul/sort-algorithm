@@ -68,11 +68,11 @@ for repeat in range(1, REPEATS + 1):
             spent_times[j][i] += sort_time/REPEATS #평균 정렬 시간 계산을 위해 반복 횟수로 나눔
 
 
+plt.rcParams['font.family'] ='Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
 for i in range(len(sort_algorithms)):
     plt.plot(arr_lengths, spent_times[i], label=sort_algorithms[i].__name__)
 
-plt.rcParams['font.family'] ='Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
 plt.xlabel("리스트의 길이")
 plt.ylabel("정렬 시간(초)")
 plt.title("거의 정렬된 리스트에 대한 정렬 속도") #이곳에 그래프 제목 입력

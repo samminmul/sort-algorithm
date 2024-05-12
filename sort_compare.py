@@ -5,10 +5,6 @@ from typing import Callable
 import matplotlib.pyplot as plt
 from sort_algorithms import bubble_sort, insertion_sort, selection_sort, merge_sort, \
                             heap_sort, quick_sort, counting_sort, counting_sort2
-RECURSION_LIMIT = 100000000
-sys.setrecursionlimit(RECURSION_LIMIT)
-plt.rcParams['font.family'] ='Malgun Gothic'
-plt.rcParams['axes.unicode_minus'] = False
 
 
 class ListGenerator:
@@ -48,6 +44,9 @@ def log(repeat: int, arr_len: int, spent_time: float, algorithm_name: str) -> No
     print(repeat, arr_len, spent_time, algorithm_name, sep=" ; ")
 
 
+RECURSION_LIMIT = 100_000_000
+sys.setrecursionlimit(RECURSION_LIMIT)
+
 ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP = 1000, 2501, 500
 sort_algorithms: list[Callable[[list], list|None]] = [bubble_sort, insertion_sort, 
     selection_sort, merge_sort, heap_sort, quick_sort, counting_sort, builtin_sort]
@@ -55,7 +54,6 @@ sort_algorithms: list[Callable[[list], list|None]] = [bubble_sort, insertion_sor
 arr_lengths = [i for i in range(ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP)]
 spent_times = [[0]*len(arr_lengths) for _ in range(len(sort_algorithms))]
 lg = ListGenerator()
-
 
 REPEATS = 5
 for repeat in range(1, REPEATS + 1):
@@ -73,6 +71,8 @@ for repeat in range(1, REPEATS + 1):
 for i in range(len(sort_algorithms)):
     plt.plot(arr_lengths, spent_times[i], label=sort_algorithms[i].__name__)
 
+plt.rcParams['font.family'] ='Malgun Gothic'
+plt.rcParams['axes.unicode_minus'] = False
 plt.xlabel("리스트의 길이")
 plt.ylabel("정렬 시간(초)")
 plt.title("거의 정렬된 리스트에 대한 정렬 속도") #이곳에 그래프 제목 입력

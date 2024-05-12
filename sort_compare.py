@@ -1,33 +1,78 @@
-from random import randrange
+import sys
+from random import randrange, shuffle
 from time import time
+from typing import Callable
 import matplotlib.pyplot as plt
-import numpy as np
-from sort_algorithms import sort_collection
+from sort_algorithms import bubble_sort, insertion_sort, selection_sort, merge_sort, \
+                            heap_sort, quick_sort, counting_sort, counting_sort2
+RECURSION_LIMIT = 100000000
+sys.setrecursionlimit(RECURSION_LIMIT)
 
 
-sorts = sort_collection[:-1] #counting_sort2는 일단 제외
-sort_times = [[0]*10 for _ in range(len(sorts))]
+class ListGenerator:
+    def _swap(self, arr: list, i: int, j: int) -> None:
+        arr[i], arr[j] = arr[j], arr[i]
 
-lengths_of_arrs_to_sort = [i*1000 for i in range(1, len(sort_times[0]) + 1)]
+    def generate_random_list(self, length: int) -> list[int]:
+        return shuffle([i for i in range(length)])
+
+    def generate_random_list_allowing_overlap(self, length: int, max_value: int) -> list[int]:
+        return [randrange(max_value) for _ in range(length)]
+
+    def generate_sorted_list(self, length: int) -> list[int]:
+        return [i for i in range(length)]
+
+    def generate_reversed_list(self, length: int) -> list[int]:
+        return [i for i in range(length-1, -1, -1)]
+
+    def generate_almost_sorted_list(self, length: int, shuffle_count: int) -> list[int]:
+        rslt = self.generate_sorted_list(length)
+        for _ in range(shuffle_count):
+            self._swap(rslt, randrange(length), randrange(length))
+        return rslt
+
+
+def builtin_sort(arr: list) -> None:
+    return sorted(arr)
+
+def measure_sorting_time(sort_algorithm: Callable[[list], list|None], arr: list) -> int:
+    timestamp = time()
+    sort_algorithm(arr)
+    sort_time = time() - timestamp
+
+    return sort_time
+
+def log(repeat: int, arr_len: int, spent_time: float, algorithm_name: str) -> None:
+    print(repeat, arr_len, spent_time, algorithm_name, sep=" ; ")
+
+
+ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP = 1000, 2501, 500
+sort_algorithms: list[Callable[[list], list|None]] = [bubble_sort, insertion_sort, 
+    selection_sort, merge_sort, heap_sort, quick_sort, counting_sort, builtin_sort]
+
+arr_lengths = [i for i in range(ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP)]
+spent_times = [[0]*len(arr_lengths) for _ in range(len(sort_algorithms))]
+lg = ListGenerator()
+
+
 REPEATS = 5
-for _ in range(REPEATS):
-    for i in range(len(lengths_of_arrs_to_sort)):
-        arr = [randrange(100) for _ in range(lengths_of_arrs_to_sort[i])]
+for repeat in range(1, REPEATS + 1):
+    for i in range(len(arr_lengths)): #각각의 리스트 길이에 대해(x축)
+        arr = lg.generate_almost_sorted_list(arr_lengths[i], 3)
 
-        for j in range(len(sorts)):
+        for j in range(len(sort_algorithms)): #각 정렬 알고리즘에 대해 시간 측정
             arr_to_sort = arr.copy()
-            timestamp = time()
-            sorts[j](arr_to_sort)
-            sort_time = time() - timestamp
+            sort_time = measure_sorting_time(sort_algorithms[j], arr_to_sort)
 
-            print(lengths_of_arrs_to_sort[i], sort_time, sorts[j].__name__, sep=" ; ")
-            sort_times[j][i] += sort_time/REPEATS
+            log(repeat, arr_lengths[i], sort_time, sort_algorithms[j].__name__,)
+            spent_times[j][i] += sort_time/REPEATS #평균 정렬 시간 계산을 위해 반복 횟수로 나눔
 
 
-for i in range(len(sorts)):
-    plt.plot(lengths_of_arrs_to_sort, sort_times[i], label=sorts[i].__name__)
+for i in range(len(sort_algorithms)):
+    plt.plot(arr_lengths, spent_times[i], label=sort_algorithms[i].__name__)
 
 plt.xlabel("array length")
-plt.ylabel("spent time")
+plt.ylabel("spent time(sec)")
+plt.title("") #이곳에 그래프 제목 입력
 plt.legend()
 plt.show()

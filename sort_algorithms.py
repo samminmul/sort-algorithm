@@ -6,7 +6,7 @@ def _swap(arr, i, j, check=False):
         print(f"swap {i}, {j} -> {arr}")
 
 
-def selection_sort(arr):
+def selection_sort(arr: list):
     for i in range(len(arr)):
         min_idx = i
         for j in range(i + 1, len(arr)):
@@ -15,14 +15,14 @@ def selection_sort(arr):
         _swap(arr, i, min_idx)
 
 
-def insertion_sort(arr):
+def insertion_sort(arr: list):
     for i in range(1, len(arr)):
         while arr[i - 1] > arr[i] and i > 1:
             _swap(arr, i, i - 1)
             i -= 1
 
 
-def bubble_sort(arr):
+def bubble_sort(arr: list):
     for i in range(len(arr)):
         for j in range(len(arr) - i - 1):
             if arr[j] > arr[j + 1]:
@@ -57,7 +57,7 @@ def _merge_sort_in_range(arr, start, end):
     _merge_sort_in_range(arr, half + 1, end)
     _merge(arr, start, half, end)
 
-def merge_sort(arr):
+def merge_sort(arr: list):
     _merge_sort_in_range(arr, 0, len(arr) - 1)
     
 
@@ -79,8 +79,8 @@ def _partition(arr, start, end):
             break
         _swap(arr, low, high)
 
-    _swap(arr, piv_idx, low - 1)
-    piv_idx = low - 1
+    _swap(arr, piv_idx, high)
+    piv_idx = high
 
     return piv_idx
 
@@ -92,7 +92,7 @@ def _quick_sort_in_range(arr, start, end):
     _quick_sort_in_range(arr, start, piv_idx - 1)
     _quick_sort_in_range(arr, piv_idx + 1, end)
 
-def quick_sort(arr):
+def quick_sort(arr: list):
     _quick_sort_in_range(arr, 0, len(arr) - 1)
     
 
@@ -139,7 +139,7 @@ class _Heap:
 
         return head
 
-def heap_sort(arr):
+def heap_sort(arr: list):
     heap = _Heap(arr)
     rslt = []
     for _ in range(heap.getsize()):
@@ -148,7 +148,7 @@ def heap_sort(arr):
     return rslt
 
 
-def counting_sort(arr):
+def counting_sort(arr: list[int]):
     count = [0] * (max(arr) + 1)
     for i in arr:
         count[i] += 1
@@ -160,7 +160,7 @@ def counting_sort(arr):
 
     return rslt
 
-def counting_sort2(arr): #누적합 이용
+def counting_sort2(arr: list[int]): #누적합 이용
     count = [0] * (max(arr) + 1)
     for i in arr:
         count[i] += 1
@@ -179,3 +179,16 @@ def counting_sort2(arr): #누적합 이용
 
 sort_collection = [bubble_sort, insertion_sort, selection_sort, merge_sort, 
                    heap_sort, quick_sort, counting_sort, counting_sort2]
+
+
+if __name__ == "__main__":
+    from random import randrange
+
+    for i in range(2**12):
+        arr = [randrange(100) for _ in range(50)]
+        copyarr = arr.copy()
+        quick_sort(copyarr)
+        issorted = copyarr == sorted(arr)
+        print(copyarr, issorted, i)
+        if not issorted:
+            break

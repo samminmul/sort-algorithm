@@ -177,10 +177,6 @@ def counting_sort2(arr: list[int]): #누적합 이용
     return rslt
 
 
-sort_collection = [bubble_sort, insertion_sort, selection_sort, merge_sort, 
-                   heap_sort, quick_sort, counting_sort, counting_sort2]
-
-
 if __name__ == "__main__":
     from random import randrange
 

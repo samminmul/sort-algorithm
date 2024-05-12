@@ -23,9 +23,9 @@ class ListGenerator:
     def generate_reversed_list(self, length: int) -> list[int]:
         return [i for i in range(length-1, -1, -1)]
 
-    def generate_almost_sorted_list(self, length: int, shuffle_count: int) -> list[int]:
+    def generate_almost_sorted_list(self, length: int, swap_count: int) -> list[int]:
         rslt = self.generate_sorted_list(length)
-        for _ in range(shuffle_count):
+        for _ in range(swap_count):
             self._swap(rslt, randrange(length), randrange(length))
         return rslt
 

@@ -178,10 +178,11 @@ def counting_sort2(arr: list[int]): #누적합 이용
 
 
 if __name__ == "__main__":
-    from random import randrange
+    from random import randrange, shuffle
 
-    for i in range(2**12):
-        arr = [randrange(100) for _ in range(50)]
+    for i in range(1):
+        arr = [i for i in range(10000)]
+        shuffle(arr)
         copyarr = arr.copy()
         quick_sort(copyarr)
         issorted = copyarr == sorted(arr)

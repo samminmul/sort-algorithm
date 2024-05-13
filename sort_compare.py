@@ -12,7 +12,9 @@ class ListGenerator:
         arr[i], arr[j] = arr[j], arr[i]
 
     def generate_random_list(self, length: int) -> list[int]:
-        return shuffle([i for i in range(length)])
+        rslt = [i for i in range(length)]
+        shuffle(rslt)
+        return rslt
 
     def generate_random_list_allowing_overlap(self, length: int, min_value: int, max_value: int) -> list[int]:
         return [randrange(min_value, max_value + 1) for _ in range(length)]
@@ -44,8 +46,8 @@ def log(repeat: int, arr_len: int, spent_time: float, algorithm_name: str) -> No
     print(repeat, arr_len, spent_time, algorithm_name, sep=" ; ")
 
 
-'''RECURSION_LIMIT = 100_000_000
-sys.setrecursionlimit(RECURSION_LIMIT)'''
+RECURSION_LIMIT = 2100000000
+sys.setrecursionlimit(RECURSION_LIMIT)
 
 ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP = 1000, 10001, 1000
 sort_algorithms: list[Callable[[list], list|None]] = [bubble_sort, insertion_sort, 
@@ -62,7 +64,9 @@ for repeat in range(1, REPEATS + 1):
 
         for j in range(len(sort_algorithms)): #각 정렬 알고리즘에 대해 시간 측정
             arr_to_sort = arr.copy()
-            sort_time = measure_sorting_time(sort_algorithms[j], arr_to_sort)
+            timestamp = time()
+            sort_algorithms[j](arr)
+            sort_time = time() - timestamp
 
             log(repeat, arr_lengths[i], sort_time, sort_algorithms[j].__name__,)
             spent_times[j][i] += sort_time/REPEATS #평균 정렬 시간 계산을 위해 반복 횟수로 나눔

@@ -44,10 +44,10 @@ def log(repeat: int, arr_len: int, spent_time: float, algorithm_name: str) -> No
     print(repeat, arr_len, spent_time, algorithm_name, sep=" ; ")
 
 
-RECURSION_LIMIT = 100_000_000
-sys.setrecursionlimit(RECURSION_LIMIT)
+'''RECURSION_LIMIT = 100_000_000
+sys.setrecursionlimit(RECURSION_LIMIT)'''
 
-ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP = 1000, 2501, 500
+ARRLEN_START, ARRLEN_STOP, ARRLEN_STEP = 1000, 10001, 1000
 sort_algorithms: list[Callable[[list], list|None]] = [bubble_sort, insertion_sort, 
     selection_sort, merge_sort, heap_sort, quick_sort, counting_sort, builtin_sort]
 

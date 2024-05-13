@@ -79,8 +79,8 @@ def _partition(arr, start, end):
             break
         _swap(arr, low, high)
 
-    _swap(arr, piv_idx, high)
-    piv_idx = high
+    _swap(arr, piv_idx, low - 1)
+    piv_idx = low - 1
 
     return piv_idx
 
@@ -92,7 +92,7 @@ def _quick_sort_in_range(arr, start, end):
     _quick_sort_in_range(arr, start, piv_idx - 1)
     _quick_sort_in_range(arr, piv_idx + 1, end)
 
-def quick_sort(arr: list):
+def quick_sort(arr):
     _quick_sort_in_range(arr, 0, len(arr) - 1)
     
 

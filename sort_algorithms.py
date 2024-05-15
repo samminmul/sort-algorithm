@@ -148,7 +148,7 @@ def heap_sort(arr: list):
     return rslt
 
 
-def counting_sort(arr: list[int]):
+def counting_sort2(arr: list[int]):
     count = [0] * (max(arr) + 1)
     for i in arr:
         count[i] += 1
@@ -160,7 +160,7 @@ def counting_sort(arr: list[int]):
 
     return rslt
 
-def counting_sort2(arr: list[int]): #누적합 이용
+def counting_sort(arr: list[int]): #누적합 이용
     count = [0] * (max(arr) + 1)
     for i in arr:
         count[i] += 1
